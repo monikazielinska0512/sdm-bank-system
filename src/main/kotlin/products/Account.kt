@@ -43,4 +43,8 @@ class Account(
         }
     }
 
+    fun takeLoan(amount: Double) {
+        val loan = Loan(this.getOwner(), this, amount, LocalDate.now(), 0.0, TransactionHistory())
+        this.addMoney(amount)
+    }
 }
