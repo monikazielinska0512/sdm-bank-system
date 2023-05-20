@@ -3,10 +3,24 @@ package products
 import transactions.TransactionHistory
 import java.time.LocalDate
 
+// Receiver
 abstract class Product(
-    var id: String,
-    var owner: String,
-    var dateOpened: LocalDate,
+    private var id: String,
+    private var owner: String,
+    private var dateOpened: LocalDate,
     var balance: Double,
-    var transactionHistory: TransactionHistory
-)
+    private var transactionHistory: TransactionHistory
+) {
+
+    fun getOwner(): String {
+        return owner
+    }
+
+    fun getDateOpened(): LocalDate {
+        return dateOpened
+    }
+
+    fun getTransactionHistory(): TransactionHistory {
+        return transactionHistory
+    }
+}

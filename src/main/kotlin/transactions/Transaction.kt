@@ -1,9 +1,10 @@
 package transactions
-import products.Product
 abstract class Transaction {
-    protected lateinit var product: Product
-    open fun transaction(product: Product) {
-        this.product = product
-    }
+    // swoje atrybuty
+
+    //konstruktor
+
     abstract fun execute()
 }
+
+// osobna klasa dla każdego rodzaje transakcji np. Transfer, Deposit, Withdrawal, Payment, etc. która nadpisuje metodę exectue()
