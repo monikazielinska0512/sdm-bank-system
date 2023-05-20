@@ -1,12 +1,10 @@
-package transactions.account
+package transactions.concrete_transactions
 import products.Account
-import products.Product
 import transactions.Transaction
 class OpenAccount(private var account: Account) : Transaction() {
     override fun execute() {
         account.open()
-    }
-    override fun transaction(product: Product) {
-        this.product = account
+        account.getTransactionHistory().add(this)
+        println("Open Account: ${account.getOwner()} opened their account.")
     }
 }
