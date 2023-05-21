@@ -1,19 +1,17 @@
 package products
-
-import transactions.TransactionHistory
 import java.time.LocalDate
 import java.util.*
 
 class Loan(
     owner: String,
-    var associatedAccount: Account,
+    private var associatedAccount: Account,
     var value: Double,
     dateOpened: LocalDate,
     balance: Double,
-    transactionHistory: TransactionHistory
-) : Product(UUID.randomUUID().toString(), owner, dateOpened, balance, transactionHistory){
+) : Product(UUID.randomUUID().toString(), owner, dateOpened, balance){
 
-
-
-
+    fun open(account: Account, amount: Double) {
+        this.associatedAccount = account
+        this.associatedAccount.addMoney(amount)
+    }
 }

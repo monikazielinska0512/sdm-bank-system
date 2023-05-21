@@ -2,7 +2,7 @@ package transactions
 import java.util.*
 
 class TransactionHistory {
-    val history = Stack<Transaction>()
+    private val history = Stack<Transaction>()
     fun add(c: Transaction) {
         history.push(c)
     }

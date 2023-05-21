@@ -12,9 +12,8 @@ class Deposit(
     owner: String,
     dateOpened: LocalDate,
     balance: Double,
-    transactionHistory: TransactionHistory
 ) : Product(
-    UUID.randomUUID().toString(), owner, dateOpened, balance, transactionHistory
+    UUID.randomUUID().toString(), owner, dateOpened, balance
 ) {
     fun addMoney(amount: Double) {
         balance += amount
@@ -31,18 +30,12 @@ class Deposit(
             calculatedInterest = 0.0
         }
         else{
-            calculateInterest()
             associatedAccount.addMoney(balance + calculatedInterest)
             balance = 0.0
         }
     }
     fun close() {
-        calculateInterest()
         associatedAccount.addMoney(balance + calculatedInterest)
         balance = 0.0
-    }
-
-    fun calculateInterest() {
-        //TODO: Calculate interest
     }
 }

@@ -1,9 +1,9 @@
 package products
 
+import transactions.Transaction
 import transactions.TransactionHistory
 import java.time.LocalDate
 
-// Receiver
 abstract class Product(
     private var id: String,
     private var owner: String,
@@ -20,7 +20,7 @@ abstract class Product(
         return dateOpened
     }
 
-    fun getTransactionHistory(): TransactionHistory {
-        return transactionHistory
+    fun addToTransactionHistory(transaction: Transaction) {
+        transactionHistory.add(transaction)
     }
 }
