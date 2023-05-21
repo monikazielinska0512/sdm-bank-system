@@ -1,8 +1,8 @@
 package products
 
 
-import transactions.Transaction
 import InterestMechanism
+import transactions.Transaction
 import transactions.TransactionHistory
 import java.time.LocalDate
 
@@ -11,7 +11,7 @@ abstract class Product(
     private var owner: String,
     private var dateOpened: LocalDate,
     var balance: Double,
-  private var interestMechanism: InterestMechanism
+    private var interestMechanism: InterestMechanism,
     private var transactionHistory: TransactionHistory = TransactionHistory()
 ) {
 
@@ -25,10 +25,9 @@ abstract class Product(
 
     fun addToTransactionHistory(transaction: Transaction) {
         transactionHistory.add(transaction)
-    var transactionHistory: TransactionHistory,
-    
-) {
+    }
+
     fun calculateInterest() {
-        interestMechanism.calculateInterest()
+        interestMechanism.calculateInterest(this)
     }
 }
