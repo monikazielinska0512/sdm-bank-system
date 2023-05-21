@@ -1,4 +1,5 @@
 package products
+import InterestMechanism
 import transactions.TransactionHistory
 import java.time.LocalDate
 
@@ -7,5 +8,6 @@ class Deposit(
     owner: String,
     dateOpened: LocalDate,
     balance: Double,
-    transactionHistory: TransactionHistory
-) : Product(id, owner, dateOpened, balance, transactionHistory)
+    transactionHistory: TransactionHistory, interestMechanism: InterestMechanism
+) : Product(id, owner, dateOpened, balance, transactionHistory, interestMechanism
+)
