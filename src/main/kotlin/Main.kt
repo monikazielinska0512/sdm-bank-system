@@ -17,7 +17,8 @@ import java.util.*
 object BankSystem {
     @JvmStatic
     fun main(args: Array<String>) {
-        val bank = Bank();
+        val mediator = InterBankPaymentAgency()
+        val bank = Bank("Bank 1", mediator)
 
         val monika = Customer(UUID.randomUUID().toString(), "Monika", "abc")
         val przemek = Customer(UUID.randomUUID().toString(), "Przemek", "abc")
@@ -63,8 +64,8 @@ object BankSystem {
         )
 
         // Switch to a Debit account
-        bank.executeCommand(SwitchToDebitAccount(monikaAccount))
-        bank.executeCommand(Transfer(monikaAccount, przemekAccount, 100000.0))
+        bank.executeCommand(SwitchToDebitAccount(monikaAccount, -10000.0))
+        bank.executeCommand(Transfer(monikaAccount, przemekAccount, 1000.0))
         bank.executeCommand(Transfer(przemekAccount, monikaAccount, 100.0))
 
 

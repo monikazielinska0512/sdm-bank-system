@@ -9,7 +9,11 @@ class Bank(
         transaction.execute()
         transactionHistory.add(transaction)
     }
+
     fun getTransactionHistory(): TransactionHistory {
         return transactionHistory
+    }
+    fun sendMoneyToOtherBank(recipientBank: Bank, amount: Double) {
+        mediator.transferMoney(this, recipientBank, amount)
     }
 }
