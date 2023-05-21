@@ -1,0 +1,5 @@
+
+// State
+class InterestMechanism {
+
+}
