@@ -1,4 +1,4 @@
-package transactions.concrete_transactions
+package transactions.concrete_transactions.loan
 
 import interestMechanisms.InterestAlgorithm2
 import products.Account

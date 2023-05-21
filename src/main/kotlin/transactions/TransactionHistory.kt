@@ -13,9 +13,6 @@ class TransactionHistory {
     }
 
     fun print() {
-//        for (i in history) {
-//            println(i.type.toString() + " " + i.executionDate + " " + i.description)
-//        }
         val dash = "-".repeat(100)
         println(
             "Transaction Type${" ".repeat(5)} Execution Date${" ".repeat(15)} Description${" ".repeat(15)}"
@@ -28,8 +25,5 @@ class TransactionHistory {
                         k.description.toString().trim().padEnd(35)
             )
         }
-
     }
-
-
 }

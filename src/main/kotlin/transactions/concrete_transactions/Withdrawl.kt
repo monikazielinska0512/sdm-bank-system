@@ -1,13 +1,16 @@
 package transactions.concrete_transactions
 
 import products.Account
+import products.Product
 import transactions.Transaction
 import transactions.TransactionType
 import java.time.LocalDate
 
-class Withdrawal(var account: Account, private var amount: Double) : Transaction(TransactionType.WITHDRAWAL, LocalDate.now()) {
+class Withdrawal(var product: Product, private var amount: Double) :
+    Transaction(TransactionType.WITHDRAWAL, LocalDate.now()) {
     override fun execute() {
-        account.withdrawMoney(amount)
-        description = "Account_id: ${account.getId()}, Amount: ${amount}, Owner: ${account.getOwner()}, Balance: ${account.balance}"
+        product.withdrawMoney(amount)
+        description =
+            "Account_id: ${product.getId()}, Amount: ${amount}, Owner: ${product.getOwner()}, Balance: ${product.balance}"
     }
 }

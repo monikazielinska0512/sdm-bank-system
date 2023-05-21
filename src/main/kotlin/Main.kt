@@ -1,7 +1,7 @@
 import interestMechanisms.InterestAlgorithm2
 import products.Account
 import products.Deposit
-import transactions.concrete_transactions.TakeLoan
+import transactions.concrete_transactions.loan.TakeLoan
 import transactions.concrete_transactions.Transfer
 import transactions.concrete_transactions.Withdrawal
 import transactions.concrete_transactions.account.CloseAccount
@@ -36,11 +36,20 @@ object BankSystem {
         //Transfer between two accounts
         bank.executeCommand(Transfer(monikaAccount, przemekAccount, 100.0))
 
-        //Deposit transfer
+        //Transfer to deposit
         bank.executeCommand(
             Transfer(
                 monikaAccount,
                 monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit,
+                100.0
+            )
+        )
+
+        //Transfer from deposit
+        bank.executeCommand(
+            Transfer(
+                monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit,
+                monikaAccount,
                 100.0
             )
         )
