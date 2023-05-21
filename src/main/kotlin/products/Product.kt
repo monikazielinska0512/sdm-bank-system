@@ -9,7 +9,7 @@ abstract class Product(
     private var owner: String,
     private var dateOpened: LocalDate,
     var balance: Double,
-    private var transactionHistory: TransactionHistory
+    private var transactionHistory: TransactionHistory = TransactionHistory()
 ) {
 
     fun getOwner(): String {

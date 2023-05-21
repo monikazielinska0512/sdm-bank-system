@@ -8,9 +8,9 @@ import java.time.LocalDate
 class TransferToDeposit(private var account: Account, private var amount: Double) :
     Transaction(TransactionType.TRANSFER_TO_DEPOSIT, LocalDate.now()) {
     override fun execute() {
-        account.transferToDeposit(amount)
-        account.getTransactionHistory().add(this)
-        account.getDeposit()?.getTransactionHistory()?.add(this)
+//        account.transferToDeposit(amount)
+//        account.getTransactionHistory().add(this)
+//        account.getDeposit()?.getTransactionHistory()?.add(this)
         println(" ${account.getOwner()} transferred ${amount} to their deposit.")
     }
 }
