@@ -8,4 +8,7 @@ class Bank(
         transaction.execute()
         transactionHistory.add(transaction)
     }
+    fun getTransactionHistory(): TransactionHistory {
+        return transactionHistory
+    }
 }

@@ -8,19 +8,46 @@ class Account(
     owner: String,
     dateOpened: LocalDate,
     balance: Double,
-    val associatedProducts: MutableList<Product> = mutableListOf(),
     interestMechanism: InterestMechanism
 ) : Product(UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism) {
 
-    fun addMoney(amount: Double) {
-        balance += amount
+    val associatedProducts: Map<String, MutableList<Product>> = mapOf(
+        "deposits" to mutableListOf(),
+        "loans" to mutableListOf()
+    )
+    private var isDebit: Boolean = false
+    fun switchToDebit() {
+        this.isDebit = true;
     }
 
-    fun removeMoney(amount: Double) {
-        if (amount > balance) {
-            throw Exception("Not enough money in account")
-        } else {
+    fun getIsDebit(): Boolean {
+        return this.isDebit
+    }
+
+    override fun transfer(receiver: Product, amount: Double) {
+
+        if (isDebit) {
             balance -= amount
+            receiver.balance += amount
+        } else {
+            if (amount > balance) {
+                throw Exception("Not enough money")
+            } else {
+                balance -= amount
+                receiver.balance += amount
+            }
+        }
+    }
+
+    override fun withdrawMoney(amount: Double){
+        if (isDebit) {
+            balance -= amount
+        } else {
+            if (amount > balance) {
+                throw Exception("Not enough money")
+            } else {
+                balance -= amount
+            }
         }
     }
 }
