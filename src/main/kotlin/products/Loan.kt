@@ -1,11 +1,13 @@
 package products
 
+import Customer
 import InterestMechanism
+import reporting.ReportVisitor
 import java.time.LocalDate
 import java.util.*
 
 class Loan(
-    owner: String,
+    owner: Customer,
     private var associatedAccount: Account,
     var value: Double,
     dateOpened: LocalDate,
@@ -18,5 +20,9 @@ class Loan(
         this.associatedAccount = account
         this.associatedAccount.addMoney(amount)
         account.associatedProducts["loans"]?.add(this)
+    }
+
+    override fun accept(visitor: ReportVisitor) {
+        visitor.visit(this)
     }
 }

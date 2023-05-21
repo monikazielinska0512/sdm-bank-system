@@ -1,21 +1,24 @@
 package products
 
 
+import BankEntity
+import Customer
 import InterestMechanism
+import reporting.ReportVisitor
 import transactions.Transaction
 import transactions.TransactionHistory
 import java.time.LocalDate
 
 abstract class Product(
     private var id: String,
-    private var owner: String,
+    private var owner: Customer,
     private var dateOpened: LocalDate,
     var balance: Double,
     private var interestMechanism: InterestMechanism,
     private var transactionHistory: TransactionHistory = TransactionHistory()
-) {
+): BankEntity {
 
-    fun getOwner(): String {
+    fun getOwner(): Customer {
         return owner
     }
 
@@ -59,4 +62,6 @@ abstract class Product(
     fun getId(): String {
         return id
     }
+
+    override fun accept(visitor: ReportVisitor) {}
 }

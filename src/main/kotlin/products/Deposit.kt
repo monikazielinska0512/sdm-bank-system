@@ -1,6 +1,8 @@
 package products
 
+import Customer
 import InterestMechanism
+import reporting.ReportVisitor
 import java.time.Duration
 import java.time.LocalDate
 import java.time.Period
@@ -10,7 +12,7 @@ class Deposit(
     private var associatedAccount: Account,
     var calculatedInterest: Double,
     private var period: Period,
-    owner: String,
+    owner: Customer,
     dateOpened: LocalDate,
     balance: Double,
     interestMechanism: InterestMechanism
@@ -43,5 +45,9 @@ class Deposit(
 
     fun open() {
         associatedAccount.associatedProducts["deposits"]?.add(this)
+    }
+
+    override fun accept(visitor: ReportVisitor) {
+        visitor.visit(this)
     }
 }

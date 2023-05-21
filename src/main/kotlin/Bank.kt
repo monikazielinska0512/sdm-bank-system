@@ -2,7 +2,8 @@ import transactions.Transaction
 import transactions.TransactionHistory
 
 class Bank(
-    private var transactionHistory: TransactionHistory = TransactionHistory()
+    private var transactionHistory: TransactionHistory = TransactionHistory(),
+    var entities: MutableList<BankEntity> = mutableListOf()
 ) {
     fun executeCommand(transaction: Transaction) {
         transaction.execute()
