@@ -20,7 +20,7 @@ object BankSystem {
 
         // Account creation
         val monikaAccount =
-            Account("Monika", LocalDate.now(), 1000.0, InterestAlgorithm2())
+            Account("Monika", LocalDate.now(), 1000000.0, InterestAlgorithm2())
         bank.executeCommand(OpenAccount(monikaAccount))
 
         val przemekAccount =
@@ -32,7 +32,7 @@ object BankSystem {
         bank.executeCommand(OpenDeposit(monikaAccount, Period.ofYears(2)))
 
         //Taking loan
-        bank.executeCommand(TakeLoan(przemekAccount, 100000.0))
+        bank.executeCommand(TakeLoan(przemekAccount, 1000.0))
 
         //Transfer between two accounts
         bank.executeCommand(Transfer(monikaAccount, przemekAccount, 100.0))
@@ -48,10 +48,8 @@ object BankSystem {
 
         //Transfer from deposit
         bank.executeCommand(
-            Transfer(
-                monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit,
-                monikaAccount,
-                100.0
+            DepositTransfer(
+                monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit
             )
         )
 
