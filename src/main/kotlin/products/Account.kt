@@ -1,5 +1,8 @@
 package products
 
+
+import InterestMechanism
+import transactions.Transaction
 import transactions.TransactionHistory
 import java.time.Duration
 import java.time.LocalDate
@@ -10,7 +13,11 @@ class Account(
     dateOpened: LocalDate,
     balance: Double,
     val associatedProducts: MutableList<Product> = mutableListOf()
-) : Product(UUID.randomUUID().toString(), owner, dateOpened, balance) {
+    transactionHistory: TransactionHistory, interestMechanism: InterestMechanism
+) : Product(id, owner, dateOpened, balance, transactionHistory, interestMechanism) {
+    fun open() {
+        println("Account opened [ Name: $owner, Balance: $balance, DateOpened: $dateOpened, ${transactionHistory.history}]")
+    }
 
     fun addMoney(amount: Double) {
         balance += amount

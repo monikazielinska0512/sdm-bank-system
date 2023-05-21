@@ -1,5 +1,5 @@
 package products
-
+import InterestMechanism
 import transactions.TransactionHistory
 import java.time.Duration
 import java.time.LocalDate
@@ -12,9 +12,10 @@ class Deposit(
     owner: String,
     dateOpened: LocalDate,
     balance: Double,
-) : Product(
-    UUID.randomUUID().toString(), owner, dateOpened, balance
-) {
+    interestMechanism: InterestMechanism
+) : Product(id, owner, dateOpened, balance, interestMechanism
+)
+{
     fun addMoney(amount: Double) {
         balance += amount
     }
