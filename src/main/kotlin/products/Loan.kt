@@ -9,14 +9,14 @@ class Loan(
     private var associatedAccount: Account,
     var value: Double,
     dateOpened: LocalDate,
-    balance: Double,
     interestMechanism: InterestMechanism
 ) : Product(
-    UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism
+    UUID.randomUUID().toString(), owner, dateOpened, 0.0, interestMechanism
 ) {
 
     fun open(account: Account, amount: Double) {
         this.associatedAccount = account
         this.associatedAccount.addMoney(amount)
+        account.associatedProducts["loans"]?.add(this)
     }
 }

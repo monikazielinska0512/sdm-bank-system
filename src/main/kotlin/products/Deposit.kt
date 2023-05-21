@@ -3,12 +3,13 @@ package products
 import InterestMechanism
 import java.time.Duration
 import java.time.LocalDate
+import java.time.Period
 import java.util.*
 
 class Deposit(
     private var associatedAccount: Account,
     private var calculatedInterest: Double,
-    private var period: Duration,
+    private var period: Period,
     owner: String,
     dateOpened: LocalDate,
     balance: Double,
@@ -16,10 +17,6 @@ class Deposit(
 ) : Product(
     UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism
 ) {
-    fun addMoney(amount: Double) {
-        balance += amount
-    }
-
     fun getAssociatedAccount(): Account {
         return associatedAccount
     }
@@ -36,8 +33,12 @@ class Deposit(
     }
 
     fun close() {
-
+        //TODO calculate interest
         associatedAccount.addMoney(balance + calculatedInterest)
         balance = 0.0
+    }
+
+    fun open() {
+        associatedAccount.associatedProducts.get("deposits")?.add(this)
     }
 }
