@@ -1,13 +1,11 @@
 import transactions.Transaction
 import transactions.TransactionHistory
-class Bank {
-    val transactionHistory: TransactionHistory = TransactionHistory()
-    fun takeCommand(transaction: Transaction) {
+
+class Bank(
+    private var transactionHistory: TransactionHistory = TransactionHistory()
+) {
+    fun executeCommand(transaction: Transaction) {
+        transaction.execute()
         transactionHistory.add(transaction)
-    }
-    fun executeCommands() {
-        for (transaction in transactionHistory.history) {
-            transaction.execute()
-        }
     }
 }

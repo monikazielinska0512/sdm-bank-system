@@ -1,0 +1,5 @@
+
+//Mediator Pattern
+class IBPA {
+
+}
