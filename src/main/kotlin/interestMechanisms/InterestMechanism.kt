@@ -1,3 +1,5 @@
+import products.Product
+
 interface InterestMechanism {
-    fun calculateInterest();
+    fun calculateInterest(product: Product)
 }

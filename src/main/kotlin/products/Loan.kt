@@ -1,8 +1,6 @@
 package products
 
-
 import InterestMechanism
-import transactions.TransactionHistory
 import java.time.LocalDate
 import java.util.*
 
@@ -12,10 +10,10 @@ class Loan(
     var value: Double,
     dateOpened: LocalDate,
     balance: Double,
-      transactionHistory: TransactionHistory, interestMechanism: InterestMechanism
-) : Product(id, owner, dateOpened, balance, transactionHistory, interestMechanism
-)
-{
+    interestMechanism: InterestMechanism
+) : Product(
+    UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism
+) {
 
     fun open(account: Account, amount: Double) {
         this.associatedAccount = account

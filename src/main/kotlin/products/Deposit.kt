@@ -1,6 +1,6 @@
 package products
+
 import InterestMechanism
-import transactions.TransactionHistory
 import java.time.Duration
 import java.time.LocalDate
 import java.util.*
@@ -13,9 +13,9 @@ class Deposit(
     dateOpened: LocalDate,
     balance: Double,
     interestMechanism: InterestMechanism
-) : Product(id, owner, dateOpened, balance, interestMechanism
-)
-{
+) : Product(
+    UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism
+) {
     fun addMoney(amount: Double) {
         balance += amount
     }
@@ -25,17 +25,18 @@ class Deposit(
     }
 
     fun withdrawMoneyToAccount() {
-        if (LocalDate.now() < this.getDateOpened() + period ) {
+        if (LocalDate.now() < this.getDateOpened() + period) {
             balance = 0.0
             associatedAccount.addMoney(balance)
             calculatedInterest = 0.0
-        }
-        else{
+        } else {
             associatedAccount.addMoney(balance + calculatedInterest)
             balance = 0.0
         }
     }
+
     fun close() {
+
         associatedAccount.addMoney(balance + calculatedInterest)
         balance = 0.0
     }
