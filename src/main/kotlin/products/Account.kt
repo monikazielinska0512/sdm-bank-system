@@ -16,8 +16,10 @@ class Account(
         "loans" to mutableListOf()
     )
     private var isDebit: Boolean = false
-    fun switchToDebit() {
+    private var debitLimit = 0.0;
+    fun switchToDebit(limit: Double) {
         this.isDebit = true;
+        this.debitLimit = limit;
     }
 
     fun getIsDebit(): Boolean {
@@ -27,8 +29,12 @@ class Account(
     override fun transfer(receiver: Product, amount: Double) {
 
         if (isDebit) {
-            balance -= amount
-            receiver.balance += amount
+            if (balance - amount < debitLimit) {
+                throw Exception("Debit limit exceeded")
+            } else {
+                balance -= amount
+                receiver.balance += amount
+            }
         } else {
             if (amount > balance) {
                 throw Exception("Not enough money")
@@ -39,7 +45,7 @@ class Account(
         }
     }
 
-    override fun withdrawMoney(amount: Double){
+    override fun withdrawMoney(amount: Double) {
         if (isDebit) {
             balance -= amount
         } else {
