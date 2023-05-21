@@ -1,0 +1,3 @@
+interface InterestMechanism {
+    fun calculateInterest();
+}
