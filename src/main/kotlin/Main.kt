@@ -4,12 +4,10 @@ import reporting.AccountReportVisitor
 import reporting.CustomerReportVisitor
 import transactions.concrete_transactions.product.Transfer
 import transactions.concrete_transactions.account.CloseAccount
-import transactions.concrete_transactions.account.OpenAccount
 import transactions.concrete_transactions.account.SwitchToDebitAccount
 import transactions.concrete_transactions.deposit.CloseDeposit
 import transactions.concrete_transactions.deposit.OpenDeposit
-import transfer.Bank
-import java.time.LocalDate
+import bank.Bank
 import java.time.Period
 
 object BankSystem {
@@ -75,6 +73,12 @@ object BankSystem {
         for (i in 1..10) {
             bankA.createCustomer("test$i", "test$i")
         }
+
+        for (entity in bankA.entities) {
+            entity.accept(accountReportVisitor)
+        }
+
+        println(accountReportVisitor.generateReport())
 
 //        for (entity in bankA.entities) {
 //            entity.accept(listReportVisitor)

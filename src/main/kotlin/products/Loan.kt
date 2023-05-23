@@ -17,7 +17,7 @@ class Loan(
     interestMechanism: InterestMechanism,
     bank: Bank = associatedAccount.bank
 ) : Product(
-    UUID.randomUUID().toString(), owner, dateOpened, 0.0, interestMechanism
+    UUID.randomUUID().toString(), owner, dateOpened, value, interestMechanism, bank
 ) {
     private var repaymentValue: Double = calculateInterest()
     private var isPaidOff: Boolean = false
