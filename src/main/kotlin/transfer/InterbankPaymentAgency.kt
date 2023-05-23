@@ -1,34 +1,39 @@
 import products.Account
-import transfer.Bank
-import java.time.LocalDate
+import bank.Bank
+import transactions.concrete_transactions.product.Transfer
+import transfer.BankMediator
 
-interface InterbankPaymentAgency {
-    fun sendTransfer(
-        senderBank: Bank,
-        receiverBank: Bank,
-        senderAccount: Account,
-        receiverAccount: Account,
-        amount: Double
-    )
-}
 
-class InterbankPaymentAgencyImpl : InterbankPaymentAgency {
-    override fun sendTransfer(
-        senderBank: Bank,
-        receiverBank: Bank,
+class InterbankPaymentAgency : BankMediator {
+    lateinit var packageBuffer: ArrayList<InterBankTransfer>
+
+    override fun sendPackageOfTransactions(sender: Bank, packageBuffer: ArrayList<InterBankTransfer>) {
+
+    }
+
+    fun handlePackageDistribution() {
+        if (packageBuffer.size >= 5) {
+            for (transfer in packageBuffer) {
+                transfer.senderAccount.bank.executeCommand(
+                    Transfer(
+                        transfer.senderAccount,
+                        transfer.receiverAccount,
+                        transfer.amount
+                    )
+                )
+            }
+            packageBuffer.clear()
+        }
+    }
+
+    fun receiveTransferFromBank(
         senderAccount: Account,
         receiverAccount: Account,
         amount: Double
     ) {
-        val transferTransaction = TransferTransaction(
-            senderAccount,
-            receiverAccount,
-            amount,
-            LocalDate.now()
-        )
-        senderBank.executeCommand(transferTransaction)
-        receiverBank.getTransactionHistory().add(transferTransaction)
-        senderAccount.addToTransactionHistory(transferTransaction)
-        receiverAccount.addToTransactionHistory(transferTransaction)
+        packageBuffer.add(InterBankTransfer(senderAccount, receiverAccount, amount))
+        handlePackageDistribution()
     }
+
+
 }

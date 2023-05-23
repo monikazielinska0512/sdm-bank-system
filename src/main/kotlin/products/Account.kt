@@ -1,45 +1,58 @@
 package products
 
-import Customer
+import bank.Customer
 import InterestMechanism
 import reporting.ReportVisitor
+import bank.Bank
 import java.time.LocalDate
 import java.util.*
 
 class Account(
-    owner: Customer,
-    dateOpened: LocalDate,
+    accountOwner: Customer,
+    openingDate: LocalDate,
     balance: Double,
-    interestMechanism: InterestMechanism
-) : Product(UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism) {
+    interestMechanism: InterestMechanism,
+    bank: Bank
+
+) : Product(
+    UUID.randomUUID().toString(),
+    accountOwner,
+    openingDate,
+    balance,
+    interestMechanism,
+    bank
+) {
 
     val associatedProducts: Map<String, MutableList<Product>> = mapOf(
         "deposits" to mutableListOf(),
         "loans" to mutableListOf()
     )
+
     private var isDebit: Boolean = false
-    private var debitLimit = 0.0;
+    private var isActive: Boolean = true
+    private var debitLimit: Double = 0.0
+    private var closedDate: LocalDate? = null
+
     fun switchToDebit(limit: Double) {
-        this.isDebit = true;
-        this.debitLimit = limit;
+        isDebit = true
+        debitLimit = limit
     }
 
     fun getIsDebit(): Boolean {
-        return this.isDebit
+        return isDebit
     }
 
     override fun transfer(receiver: Product, amount: Double) {
-
         if (isDebit) {
             if (balance - amount < debitLimit) {
-                throw Exception("Debit limit exceeded")
+                throw IllegalArgumentException("Transfer failed. Debit limit exceeded")
             } else {
                 balance -= amount
                 receiver.balance += amount
             }
         } else {
             if (amount > balance) {
-                throw Exception("Not enough money")
+                throw IllegalArgumentException("Transfer failed. Insufficient funds")
             } else {
                 balance -= amount
                 receiver.balance += amount
@@ -49,14 +62,27 @@ class Account(
 
     override fun withdrawMoney(amount: Double) {
         if (isDebit) {
-            balance -= amount
+            if (balance - amount < debitLimit) {
+                throw IllegalArgumentException("Withdrawal failed. Debit limit exceeded")
+            } else {
+                balance -= amount
+            }
         } else {
             if (amount > balance) {
-                throw Exception("Not enough money")
+                throw IllegalArgumentException("Withdrawal failed. Insufficient funds")
             } else {
                 balance -= amount
             }
         }
+    }
+
+    fun close() {
+        isActive = false
+        closedDate = LocalDate.now()
+    }
+
+    fun open() {
+        this.addToBank()
     }
 
     override fun accept(visitor: ReportVisitor) {

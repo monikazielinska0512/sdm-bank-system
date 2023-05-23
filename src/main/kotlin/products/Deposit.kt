@@ -1,50 +1,57 @@
 package products
 
-import Customer
+import bank.Customer
 import InterestMechanism
 import reporting.ReportVisitor
-import java.time.Duration
+import bank.Bank
 import java.time.LocalDate
 import java.time.Period
 import java.util.*
 
 class Deposit(
-    private var associatedAccount: Account,
+    private val associatedAccount: Account,
     var calculatedInterest: Double,
-    private var period: Period,
+    period: Period,
     owner: Customer,
     dateOpened: LocalDate,
     balance: Double,
-    interestMechanism: InterestMechanism
-) : Product(
-    UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism
-) {
-    private val closingDate: LocalDate = dateOpened + period
+    interestMechanism: InterestMechanism,
+    bank: Bank = associatedAccount.bank
 
+) : Product(UUID.randomUUID().toString(), owner, dateOpened, balance, interestMechanism, bank) {
+
+    private val closingDate: LocalDate = dateOpened + period
     fun getAssociatedAccount(): Account {
         return associatedAccount
     }
 
     override fun transfer(receiver: Product, amount: Double) {
         if (LocalDate.now() < closingDate) {
-            println("Earlier withdraw of money. You will loose your interest")
-            associatedAccount.addMoney(balance)
-            balance = 0.0
-            calculatedInterest = 0.0
+            println("Earlier withdrawal of money. You will lose your interest.")
+            withdrawAndClose()
         } else {
-            associatedAccount.addMoney(balance + calculatedInterest)
-            balance = 0.0
+            super.transfer(receiver, amount)
         }
     }
 
     fun close() {
-        //TODO calculate interest
-        associatedAccount.addMoney(balance + calculatedInterest)
-        balance = 0.0
+        if (associatedAccount.associatedProducts["deposits"]?.contains(this) == true) {
+            calculatedInterest = calculateInterest()
+            withdrawAndClose()
+            associatedAccount.associatedProducts["deposits"]?.remove(this)
+        } else {
+            throw IllegalArgumentException("Deposit is not associated with this account.")
+        }
     }
 
     fun open() {
         associatedAccount.associatedProducts["deposits"]?.add(this)
+        this.addToBank()
+    }
+
+    private fun withdrawAndClose() {
+        associatedAccount.transfer(this, balance + calculatedInterest)
+        calculatedInterest = 0.0
     }
 
     override fun accept(visitor: ReportVisitor) {

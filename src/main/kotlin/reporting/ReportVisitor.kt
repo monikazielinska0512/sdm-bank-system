@@ -1,11 +1,9 @@
 package reporting
 
-import Customer
+import bank.Customer
 import products.Account
 import products.Deposit
 import products.Loan
-import products.Product
-import transactions.Transaction
 
 interface ReportVisitor {
     fun visit(customer: Customer)
@@ -13,4 +11,5 @@ interface ReportVisitor {
     fun visit(deposit: Deposit)
     fun visit(loan: Loan)
 
+    fun generateReport(): String
 }
