@@ -1,11 +1,13 @@
 package products
 
+import Customer
 import InterestMechanism
+import reporting.ReportVisitor
 import java.time.LocalDate
 import java.util.*
 
 class Account(
-    owner: String,
+    owner: Customer,
     dateOpened: LocalDate,
     balance: Double,
     interestMechanism: InterestMechanism
@@ -49,5 +51,9 @@ class Account(
                 balance -= amount
             }
         }
+    }
+
+    override fun accept(visitor: ReportVisitor) {
+        visitor.visit(this)
     }
 }

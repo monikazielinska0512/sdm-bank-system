@@ -1,6 +1,7 @@
 import interestMechanisms.InterestAlgorithm2
 import products.Account
 import products.Deposit
+import reporting.ListReportVisitor
 import transactions.concrete_transactions.loan.TakeLoan
 import transactions.concrete_transactions.Transfer
 import transactions.concrete_transactions.Withdrawal
@@ -11,20 +12,27 @@ import transactions.concrete_transactions.deposit.CloseDeposit
 import transactions.concrete_transactions.deposit.OpenDeposit
 import java.time.LocalDate
 import java.time.Period
+import java.util.*
 
 object BankSystem {
     @JvmStatic
     fun main(args: Array<String>) {
         val bank = Bank();
 
+        val monika = Customer(UUID.randomUUID().toString(), "Monika", "abc")
+        val przemek = Customer(UUID.randomUUID().toString(), "Przemek", "abc")
+
         // Account creation
         val monikaAccount =
-            Account("Monika", LocalDate.now(), 1000.0, InterestAlgorithm2())
+            Account(monika, LocalDate.now(), 1000.0, InterestAlgorithm2())
         bank.executeCommand(OpenAccount(monikaAccount))
 
         val przemekAccount =
-            Account("Przemek", LocalDate.now(), 0.0, InterestAlgorithm2())
+            Account(przemek, LocalDate.now(), 0.0, InterestAlgorithm2())
         bank.executeCommand(OpenAccount(przemekAccount))
+
+        bank.entities.add(monikaAccount)
+        bank.entities.add(przemekAccount)
 
 
         //Deposit creation
@@ -72,5 +80,23 @@ object BankSystem {
 
         // Bank History
         bank.getTransactionHistory().print()
+
+        // visitor
+
+        val listReportVisitor = ListReportVisitor()
+
+        for (i in 1..10) {
+            val customer = Customer(UUID.randomUUID().toString(), "test$i", "test$i")
+            bank.entities.add(customer)
+        }
+
+        for (entity in bank.entities) {
+            entity.accept(listReportVisitor)
+        }
+
+        println(listReportVisitor.generateCustomerReport())
+        println(listReportVisitor.generateAccountReport())
+        println(listReportVisitor.generateDepositReport())
+        println(listReportVisitor.generateLoanReport())
     }
 }
