@@ -1,11 +1,7 @@
-package mediator
-
-import TransferTransaction
 import products.Account
 import transfer.Bank
 import java.time.LocalDate
 
-// Mediator interface
 interface InterbankPaymentAgency {
     fun sendTransfer(
         senderBank: Bank,
@@ -16,7 +12,6 @@ interface InterbankPaymentAgency {
     )
 }
 
-// Concrete mediator implementation
 class InterbankPaymentAgencyImpl : InterbankPaymentAgency {
     override fun sendTransfer(
         senderBank: Bank,
@@ -29,10 +24,11 @@ class InterbankPaymentAgencyImpl : InterbankPaymentAgency {
             senderAccount,
             receiverAccount,
             amount,
-            LocalDate.now(),
-            "Transfer from ${senderBank.name} to ${receiverBank.name}"
+            LocalDate.now()
         )
         senderBank.executeCommand(transferTransaction)
-        receiverBank.executeCommand(transferTransaction)
+        receiverBank.getTransactionHistory().add(transferTransaction)
+        senderAccount.addToTransactionHistory(transferTransaction)
+        receiverAccount.addToTransactionHistory(transferTransaction)
     }
 }

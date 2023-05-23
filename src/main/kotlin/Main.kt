@@ -1,5 +1,4 @@
 import interestMechanisms.InterestAlgorithm2
-import mediator.InterbankPaymentAgencyImpl
 import products.Account
 import products.Deposit
 import reporting.ListReportVisitor
@@ -41,8 +40,8 @@ object BankSystem {
         // The transfer is executed by the mediator
 
         // Retrieve transaction history from Bank A or Bank B
-         bankA.getTransactionHistory().print()
-        bankB.getTransactionHistory().print()
+        monikaAccount.getTransactionHistory().print()
+        przemekAccount.getTransactionHistory().print()
 
         // Switch to a Debit account
         bank.executeCommand(SwitchToDebitAccount(monikaAccount, -10000.0))
