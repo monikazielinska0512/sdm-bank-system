@@ -11,6 +11,10 @@ class TransferTransaction(
     description: String? = null
 ) : Transaction(TransactionType.TRANSFER, executionDate, description) {
     override fun execute() {
-        senderAccount.transfer(receiverAccount, amount)
+        println("BEFORE: Sender: ${senderAccount.getOwner()}, Receiver: ${receiverAccount.getOwner()}, Amount: ${amount}, Sender Balance: ${senderAccount.balance} Receiver Balance: ${receiverAccount.balance}")
+        senderAccount.withdrawMoney(amount)
+        receiverAccount.addMoney(amount)
+        description =
+            "Sender: ${senderAccount.getOwner()}, Receiver: ${receiverAccount.getOwner()}, Amount: ${amount}, Sender Balance: ${senderAccount.balance} Receiver Balance: ${receiverAccount.balance}"
     }
 }

@@ -1,6 +1,6 @@
 package transfer
 
-import mediator.InterbankPaymentAgency
+import InterbankPaymentAgency
 import products.Account
 import transactions.Transaction
 import transactions.TransactionHistory
