@@ -16,6 +16,10 @@ class TransactionHistory {
         return history.size
     }
 
+    fun getHistory(): Stack<Transaction> {
+        return history
+    }
+
 
 
     fun print(): String {

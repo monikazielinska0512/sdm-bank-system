@@ -23,6 +23,21 @@ class Account(
     bank
 ) {
 
+
+    // getters setters
+    fun getDebitLimit(): Double {
+        return debitLimit
+    }
+
+    fun getIsActive(): Boolean {
+        return isActive
+    }
+
+    fun getClosedDate(): LocalDate? {
+        return closedDate
+    }
+
+
     val associatedProducts: Map<String, MutableList<Product>> = mapOf(
         "deposits" to mutableListOf(),
         "loans" to mutableListOf()

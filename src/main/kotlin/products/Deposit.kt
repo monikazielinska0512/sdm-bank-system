@@ -11,7 +11,7 @@ import java.util.*
 class Deposit(
     private val associatedAccount: Account,
     var calculatedInterest: Double,
-    period: Period,
+    var period: Period,
     owner: Customer,
     dateOpened: LocalDate,
     balance: Double,
@@ -24,6 +24,7 @@ class Deposit(
     fun getAssociatedAccount(): Account {
         return associatedAccount
     }
+
 
     override fun transfer(receiver: Product, amount: Double) {
         if (LocalDate.now() < closingDate) {
@@ -51,6 +52,7 @@ class Deposit(
 
     private fun withdrawAndClose() {
         associatedAccount.transfer(this, balance + calculatedInterest)
+        balance = 0.0
         calculatedInterest = 0.0
     }
 

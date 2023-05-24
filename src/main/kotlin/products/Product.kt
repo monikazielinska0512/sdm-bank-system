@@ -40,6 +40,11 @@ abstract class Product(
         return transactionHistory
     }
 
+    fun getInterestMechanism(): InterestMechanism {
+        return interestMechanism
+    }
+
+
     fun calculateInterest(): Double {
         return interestMechanism.calculateInterest(this)
     }
