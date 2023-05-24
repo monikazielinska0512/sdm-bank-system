@@ -19,8 +19,28 @@ class Loan(
 ) : Product(
     UUID.randomUUID().toString(), owner, dateOpened, value, interestMechanism, bank
 ) {
-    private var repaymentValue: Double = calculateInterest()
+    private var repaymentValue: Double = value + calculateInterest()
     private var isPaidOff: Boolean = false
+
+    fun getAssociatedAccount(): Account {
+        return associatedAccount
+    }
+
+    fun getValue(): Double {
+        return value
+    }
+
+    fun getPeriod(): Period {
+        return period
+    }
+
+    fun getRepaymentValue(): Double {
+        return repaymentValue
+    }
+
+    fun getIsPaidOff(): Boolean {
+        return isPaidOff
+    }
 
     fun open(account: Account, amount: Double) {
         this.associatedAccount = account

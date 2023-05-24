@@ -1,5 +1,6 @@
 package bank
 
+import InterBankTransfer
 import InterbankPaymentAgency
 import InterestMechanism
 import products.Account
@@ -44,5 +45,11 @@ class Bank(
     fun getTransactionHistory(): TransactionHistory {
         return transactionHistory
     }
+
+    fun receiveInterBankTransfer(transferPackage: ArrayList<InterBankTransfer>) {
+
+    }
+
+
 
 }
