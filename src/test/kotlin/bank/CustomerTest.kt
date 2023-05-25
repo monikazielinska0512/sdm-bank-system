@@ -1,6 +1,7 @@
 package bank
 
-import InterbankPaymentAgency
+import BankMediator
+import InterBankPaymentAgency
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -13,9 +14,11 @@ import kotlin.test.fail
 class CustomerTest {
     private lateinit var bank: Bank
     private lateinit var customer: Customer
+    private lateinit var mediator: BankMediator
     @BeforeEach
     fun setUp() {
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
     }
 

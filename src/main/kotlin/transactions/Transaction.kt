@@ -2,6 +2,7 @@ package transactions
 
 import products.Product
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 enum class TransactionType {
     CLOSE_ACCOUNT, OPEN_ACCOUNT, CLOSE_DEPOSIT,
@@ -15,7 +16,7 @@ abstract class Transaction(
     var product: Product? = null
 ) {
     val id: String = java.util.UUID.randomUUID().toString()
-    var executionDate: LocalDate = LocalDate.now()
+    var executionDate: LocalDateTime = LocalDateTime.now()
 
     abstract fun execute()
 }

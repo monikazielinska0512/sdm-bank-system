@@ -18,11 +18,13 @@ class CloseDepositTest {
     private lateinit var account: Account
     private lateinit var deposit: Deposit
     private lateinit var closeDepositTransaction: CloseDeposit
+    private lateinit var mediator: InterBankPaymentAgency
 
 
     @BeforeEach
     fun setUp() {
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm3())
         account.balance = 1000.0

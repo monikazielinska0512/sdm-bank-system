@@ -15,11 +15,13 @@ class AccountTest {
     private lateinit var bank2: Bank
     private lateinit var customer1: Customer
     private lateinit var customer2: Customer
+    private lateinit var mediator: BankMediator
 
     @BeforeEach
     fun setUp() {
-        bank1 = Bank("MyBank1", InterbankPaymentAgency())
-        bank2 = Bank("MyBank2", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank1 = Bank("MyBank1", mediator)
+        bank2 = Bank("MyBank2", mediator)
         customer1 = Customer("John", "Doe", bank1)
         customer2 = Customer("Doe", "John", bank1)
         val openingDate = LocalDate.now()

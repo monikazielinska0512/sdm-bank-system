@@ -24,6 +24,7 @@ abstract class Product(
             bank.entities.add(this)
         }
 
+
     fun getOwner(): Customer {
         return owner
     }

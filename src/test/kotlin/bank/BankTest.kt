@@ -3,17 +3,18 @@ import interestMechanisms.InterestAlgorithm2
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import products.Deposit
 import transactions.concrete_transactions.deposit.OpenDeposit
 import java.time.Period
 
 class BankTest {
 
     private lateinit var bank: Bank
+    private lateinit var mediator: BankMediator
 
     @BeforeEach
     fun setUp() {
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank = Bank("MyBank", mediator)
     }
 
     @Test
@@ -56,25 +57,4 @@ class BankTest {
         Assertions.assertEquals(initialBalance, account.associatedProducts["deposits"]?.get(0)?.balance)
         Assertions.assertTrue(bank.getTransactionHistory().getHistory().contains(openDepositTransaction))
     }
-
-//    @Test
-//    fun testSendTransfer() {
-//        val senderCustomer = bank.createCustomer("John", "Doe")
-//        val receiverCustomer = bank.createCustomer("Jane", "Smith")
-//        val interestMechanism = InterestAlgorithm2()
-//        val senderAccount = bank.createAccount(senderCustomer, interestMechanism)
-//        val receiverAccount = bank.createAccount(receiverCustomer, interestMechanism)
-//
-//        val initialSenderBalance = senderAccount.balance
-//        val initialReceiverBalance = receiverAccount.balance
-//        val transferAmount = 50.0
-//
-//        bank.sendTransfer(bank, bank, senderAccount, receiverAccount, transferAmount)
-//
-//        Assertions.assertEquals(initialSenderBalance - transferAmount, senderAccount.balance)
-//        Assertions.assertEquals(initialReceiverBalance + transferAmount, receiverAccount.balance)
-//    }
-
-    // Add more tests as needed
-
 }

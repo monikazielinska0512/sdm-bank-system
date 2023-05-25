@@ -8,7 +8,7 @@ class DepositTransfer(private val deposit: Deposit) :
     ) {
     override fun execute() {
         product = deposit
-        deposit.transfer(deposit.getAssociatedAccount(), deposit.balance + deposit.calculatedInterest)
+        deposit.transfer(deposit.getAssociatedAccount(), deposit.balance + deposit.calculateInterest())
         description = "Transfer from deposit."
         deposit.addToTransactionHistory(this)
         deposit.getAssociatedAccount().addToTransactionHistory(this)

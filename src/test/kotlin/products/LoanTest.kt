@@ -12,28 +12,28 @@ import java.time.Period
 class LoanTest {
 
     private lateinit var loan: Loan
-    private lateinit var associatedAccount: Account
+    private lateinit var account: Account
     private lateinit var bank: Bank
+    private lateinit var mediator: BankMediator
 
     @BeforeEach
     fun setUp() {
-        val owner = Customer("John", "Doe", Bank("MyBank", InterbankPaymentAgency()))
-        associatedAccount = Account(owner, LocalDate.now(), 10000.0, InterestAlgorithm2(), Bank("MyBank", InterbankPaymentAgency()))
+        mediator = InterBankPaymentAgency()
+        val owner = Customer("John", "Doe", Bank("MyBank", mediator))
+        account = Account(owner, LocalDate.now(), 10000.0, InterestAlgorithm2(), Bank("MyBank", mediator))
         val value = 1000.0
         val period = Period.ofYears(1)
         val dateOpened = LocalDate.now()
         val interestMechanism = InterestAlgorithm2()
-        bank = Bank("MyBank", InterbankPaymentAgency())
-        loan = Loan(owner, associatedAccount, value, period, dateOpened, interestMechanism, bank)
+        bank = Bank("MyBank", mediator)
+        loan = Loan(owner, account, value, period, dateOpened, interestMechanism, bank)
     }
 
     @Test
     fun testOpen() {
         val account = Account(Customer("Jane", "Smith", bank), LocalDate.now(), 0.0,  InterestAlgorithm2(), bank)
         val amount = 500.0
-
         loan.open(account, amount)
-
         Assertions.assertEquals(account, loan.getAssociatedAccount())
         Assertions.assertEquals(amount, loan.getAssociatedAccount().balance)
         Assertions.assertTrue(account.associatedProducts["loans"]?.contains(loan) == true)

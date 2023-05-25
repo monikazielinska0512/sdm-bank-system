@@ -37,7 +37,6 @@ class Deposit(
 
     fun close() {
         if (associatedAccount.associatedProducts["deposits"]?.contains(this) == true) {
-            calculatedInterest = calculateInterest()
             withdrawAndClose()
             associatedAccount.associatedProducts["deposits"]?.remove(this)
         } else {
@@ -51,9 +50,11 @@ class Deposit(
     }
 
     private fun withdrawAndClose() {
-        associatedAccount.transfer(this, balance + calculatedInterest)
-        balance = 0.0
+        calculatedInterest = calculateInterest()
+        associatedAccount.addMoney(calculatedInterest + balance)
         calculatedInterest = 0.0
+        balance = 0.0
+
     }
 
     override fun accept(visitor: ReportVisitor) {

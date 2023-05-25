@@ -1,6 +1,6 @@
 package reporting
 
-import InterbankPaymentAgency
+import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer
 import interestMechanisms.InterestAlgorithm1
@@ -23,11 +23,13 @@ class DepositReportVisitorTest {
     private lateinit var account2: Account
     private lateinit var deposit1: Deposit
     private lateinit var deposit2: Deposit
+    private lateinit var mediator: InterBankPaymentAgency
 
 
     @BeforeEach
     fun setUp() {
-        bank =  Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank =  Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         depositReportVisitor = DepositReportVisitor()
         account1 = Account(customer, LocalDate.now(), 10000.0, InterestAlgorithm2(), bank)
