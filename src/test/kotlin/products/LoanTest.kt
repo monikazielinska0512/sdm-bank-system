@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import products.Account
 import products.Loan
-import transactions.concrete_transactions.loan.TakeLoan
 import java.time.LocalDate
 import java.time.Period
 
