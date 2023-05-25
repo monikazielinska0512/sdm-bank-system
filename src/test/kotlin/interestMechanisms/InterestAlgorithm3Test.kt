@@ -5,14 +5,10 @@ import InterBankPaymentAgency
 import Withdrawal
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
-import products.Product
 import bank.Bank
 import bank.Customer
 import org.junit.jupiter.api.BeforeEach
 import products.Account
-import transactions.Transaction
-import transactions.TransactionHistory
-import java.time.LocalDate
 
 class InterestAlgorithm3Test {
     private lateinit var bank: Bank

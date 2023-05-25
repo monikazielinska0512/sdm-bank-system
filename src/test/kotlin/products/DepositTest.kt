@@ -1,7 +1,5 @@
 package products
 
-import BankMediator
-import DepositTransfer
 import InterBankPaymentAgency
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
@@ -10,9 +8,6 @@ import bank.Customer
 import interestMechanisms.InterestAlgorithm1
 import interestMechanisms.InterestAlgorithm3
 import org.junit.jupiter.api.BeforeEach
-import reporting.ReportVisitor
-import transactions.concrete_transactions.deposit.CloseDeposit
-import transactions.concrete_transactions.product.Transfer
 import java.time.LocalDate
 import java.time.Period
 

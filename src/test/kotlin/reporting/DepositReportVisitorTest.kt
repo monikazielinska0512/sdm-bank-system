@@ -1,6 +1,5 @@
 package reporting
 
-import BankMediator
 import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer

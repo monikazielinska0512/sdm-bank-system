@@ -6,8 +6,6 @@ import interestMechanisms.InterestAlgorithm2
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import products.Account
 import transactions.TransactionType
 import java.time.LocalDate

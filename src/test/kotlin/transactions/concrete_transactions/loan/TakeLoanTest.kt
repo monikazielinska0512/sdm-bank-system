@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import products.Account
-import products.Deposit
 import products.Loan
 import transactions.TransactionType
 import java.time.Period

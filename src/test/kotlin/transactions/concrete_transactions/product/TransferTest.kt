@@ -1,17 +1,14 @@
 package transactions.concrete_transactions.product
 
 import InterBankPaymentAgency
-import Withdrawal
 import bank.Bank
 import bank.Customer
 import interestMechanisms.InterestAlgorithm2
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import products.Account
 import java.time.LocalDate
-import javax.swing.TransferHandler.TransferSupport
 
 class TransferTest {
 
