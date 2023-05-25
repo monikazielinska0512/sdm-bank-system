@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import products.Account
-import products.Product
 
 class InterestAlgorithm2Test {
     private lateinit var bank: Bank

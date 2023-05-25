@@ -3,7 +3,6 @@ import interestMechanisms.InterestAlgorithm2
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import products.Deposit
 import transactions.concrete_transactions.deposit.OpenDeposit
 import java.time.Period
 
