@@ -14,16 +14,17 @@ class LoanTest {
     private lateinit var loan: Loan
     private lateinit var associatedAccount: Account
     private lateinit var bank: Bank
+    private lateinit var mediator: BankMediator
 
     @BeforeEach
     fun setUp() {
-        val owner = Customer("John", "Doe", Bank("MyBank", InterbankPaymentAgency()))
-        associatedAccount = Account(owner, LocalDate.now(), 10000.0, InterestAlgorithm2(), Bank("MyBank", InterbankPaymentAgency()))
+        val owner = Customer("John", "Doe", Bank("MyBank", mediator))
+        associatedAccount = Account(owner, LocalDate.now(), 10000.0, InterestAlgorithm2(), Bank("MyBank", mediator))
         val value = 1000.0
         val period = Period.ofYears(1)
         val dateOpened = LocalDate.now()
         val interestMechanism = InterestAlgorithm2()
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        bank = Bank("MyBank", mediator)
         loan = Loan(owner, associatedAccount, value, period, dateOpened, interestMechanism, bank)
     }
 

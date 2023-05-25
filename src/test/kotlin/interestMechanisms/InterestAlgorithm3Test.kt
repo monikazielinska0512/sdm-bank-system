@@ -1,6 +1,6 @@
 package interestMechanisms
 
-import InterbankPaymentAgency
+import BankMediator
 import Withdrawal
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
@@ -17,10 +17,11 @@ class InterestAlgorithm3Test {
     private lateinit var bank: Bank
     private lateinit var customer: Customer
     private lateinit var account: Account
+    private lateinit var mediator: BankMediator
 
     @BeforeEach
     fun setUp() {
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm3())
         account.balance = 1000.0

@@ -1,7 +1,7 @@
 package products
 
+import BankMediator
 import DepositTransfer
-import InterbankPaymentAgency
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import bank.Bank
@@ -18,10 +18,11 @@ class DepositTest {
     private lateinit var customer: Customer
     private lateinit var account: Account
     private lateinit var deposit: Deposit
+    private lateinit var mediator: BankMediator
 
     @BeforeEach
     fun setUp() {
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm3())
         account.balance = 1000.0

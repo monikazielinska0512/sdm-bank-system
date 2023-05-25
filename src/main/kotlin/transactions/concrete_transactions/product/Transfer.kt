@@ -1,5 +1,6 @@
 package transactions.concrete_transactions.product
 
+import bank.Bank
 import products.Product
 import transactions.Transaction
 import transactions.TransactionType
@@ -10,14 +11,13 @@ class Transfer(
     private val receiver: Product,
     private val transferAmount: Double
 ) : Transaction(TransactionType.TRANSFER) {
-    init {
-        validateTransferAmount()
+
+    fun getSenderBank(): Bank {
+        return sender.bank
     }
 
-    private fun validateTransferAmount() {
-        if (transferAmount <= 0) {
-            throw IllegalArgumentException("Transfer amount must be greater than zero.")
-        }
+    fun getReceiverBank(): Bank {
+        return receiver.bank
     }
 
     override fun execute() {
@@ -28,7 +28,8 @@ class Transfer(
     }
 
     private fun updateDescription() {
-        description = "$transferAmount was transferred to ${receiver.getId()}. Sender Balance: ${sender.balance}"
+        description = "Sender: ${sender.getOwner().firstName}  Sender Balance: ${sender.balance} Sender: ${receiver.getOwner().firstName}  Receiver Balance: ${receiver.balance} "
+
     }
 
     private fun updateTransactionHistory() {
