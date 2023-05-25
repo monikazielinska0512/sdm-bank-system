@@ -1,102 +1,91 @@
 import interestMechanisms.InterestAlgorithm2
-import products.Account
 import products.Deposit
-import reporting.ListReportVisitor
-import transactions.concrete_transactions.loan.TakeLoan
-import transactions.concrete_transactions.Transfer
-import transactions.concrete_transactions.Withdrawal
+import reporting.AccountReportVisitor
+import reporting.CustomerReportVisitor
+import transactions.concrete_transactions.product.Transfer
 import transactions.concrete_transactions.account.CloseAccount
-import transactions.concrete_transactions.account.OpenAccount
 import transactions.concrete_transactions.account.SwitchToDebitAccount
 import transactions.concrete_transactions.deposit.CloseDeposit
 import transactions.concrete_transactions.deposit.OpenDeposit
-import java.time.LocalDate
+import bank.Bank
 import java.time.Period
-import java.util.*
 
 object BankSystem {
     @JvmStatic
     fun main(args: Array<String>) {
-        val bank = Bank();
+        val bankA = Bank("Bank A", InterbankPaymentAgency())
+        val bankB = Bank("Bank B", InterbankPaymentAgency())
 
-        val monika = Customer(UUID.randomUUID().toString(), "Monika", "abc")
-        val przemek = Customer(UUID.randomUUID().toString(), "Przemek", "abc")
+        val monika = bankA.createCustomer("Monika", "Zielinska")
+        val przemek = bankB.createCustomer("Przemek", "Wozniak")
 
         // Account creation
-        val monikaAccount =
-            Account(monika, LocalDate.now(), 1000.0, InterestAlgorithm2())
-        bank.executeCommand(OpenAccount(monikaAccount))
+        val monikaAccount = bankA.createAccount(monika, InterestAlgorithm2())
+        val przemekAccount = bankB.createAccount(przemek, InterestAlgorithm2())
 
-        val przemekAccount =
-            Account(przemek, LocalDate.now(), 0.0, InterestAlgorithm2())
-        bank.executeCommand(OpenAccount(przemekAccount))
+        // Bank A sends a transfer to Bank B
+//        bankA.sendTransfer(bankA, bankB, monikaAccount, przemekAccount, 100.0)
 
-        bank.entities.add(monikaAccount)
-        bank.entities.add(przemekAccount)
+        // The transfer is executed by the mediator
 
-
-        //Deposit creation
-        bank.executeCommand(OpenDeposit(monikaAccount, Period.ofYears(2)))
-
-        //Taking loan
-        bank.executeCommand(TakeLoan(przemekAccount, 100000.0))
-
-        //Transfer between two accounts
-        bank.executeCommand(Transfer(monikaAccount, przemekAccount, 100.0))
-
-        //Transfer to deposit
-        bank.executeCommand(
-            Transfer(
-                monikaAccount,
-                monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit,
-                100.0
-            )
-        )
-
-        //Transfer from deposit
-        bank.executeCommand(
-            Transfer(
-                monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit,
-                monikaAccount,
-                100.0
-            )
-        )
+        // Retrieve transaction history from Bank A or Bank B
+        monikaAccount.getTransactionHistory().print()
+        przemekAccount.getTransactionHistory().print()
 
         // Switch to a Debit account
-        bank.executeCommand(SwitchToDebitAccount(monikaAccount))
-        bank.executeCommand(Transfer(monikaAccount, przemekAccount, 100000.0))
-        bank.executeCommand(Transfer(przemekAccount, monikaAccount, 100.0))
-
+        bankA.executeCommand(SwitchToDebitAccount(monikaAccount, -10000.0))
+        bankA.executeCommand(Transfer(monikaAccount, przemekAccount, 1000.0))
+        bankA.executeCommand(Transfer(przemekAccount, monikaAccount, 100.0))
 
         //Withdrawal
-        bank.executeCommand(Withdrawal(monikaAccount, 100.0))
-
+//        bankA.executeCommand(Withdrawal(monikaAccount, 100.0))
 
         //Close deposit
-        bank.executeCommand(CloseDeposit(monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit))
+        bankA.executeCommand(OpenDeposit(monikaAccount, Period.ofDays(30), InterestAlgorithm2()))
+        bankA.executeCommand(
+            Transfer(
+                monikaAccount,
+                monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit,
+                100.0
+            )
+        )
+
+        bankA.executeCommand(CloseDeposit(monikaAccount.associatedProducts["deposits"]?.get(0) as Deposit))
 
         //Close Account (with deposit)
-        bank.executeCommand(CloseAccount(monikaAccount));
+        bankA.executeCommand(CloseAccount(monikaAccount));
+
+        println(bankA.entities)
+        println(bankB.entities)
+
 
         // Bank History
-        bank.getTransactionHistory().print()
+        println(bankA.getTransactionHistory().print())
+
+
 
         // visitor
 
-        val listReportVisitor = ListReportVisitor()
+
+        val customerReportVisitor = CustomerReportVisitor()
+        val accountReportVisitor = AccountReportVisitor()
 
         for (i in 1..10) {
-            val customer = Customer(UUID.randomUUID().toString(), "test$i", "test$i")
-            bank.entities.add(customer)
+            bankA.createCustomer("test$i", "test$i")
         }
 
-        for (entity in bank.entities) {
-            entity.accept(listReportVisitor)
+        for (entity in bankA.entities) {
+            entity.accept(accountReportVisitor)
         }
 
-        println(listReportVisitor.generateCustomerReport())
-        println(listReportVisitor.generateAccountReport())
-        println(listReportVisitor.generateDepositReport())
-        println(listReportVisitor.generateLoanReport())
+        println(accountReportVisitor.generateReport())
+
+//        for (entity in bankA.entities) {
+//            entity.accept(listReportVisitor)
+//        }
+//        println(listReportVisitor.generateCustomerReport())
+//        println(listReportVisitor.generateAccountReport())
+//        println(listReportVisitor.generateDepositReport())
+//        println(listReportVisitor.generateLoanReport())
     }
 }

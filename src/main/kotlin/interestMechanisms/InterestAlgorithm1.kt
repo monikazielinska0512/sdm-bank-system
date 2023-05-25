@@ -3,8 +3,8 @@ package interestMechanisms
 import InterestMechanism
 import products.Product
 
-class InterestAlgorithm: InterestMechanism {
-    override fun calculateInterest(product: Product) {
-        println("Calculating interest using algorithm 1")
+class InterestAlgorithm1: InterestMechanism {
+    override fun calculateInterest(product: Product): Double {
+        return product.balance * 0.05
     }
 }

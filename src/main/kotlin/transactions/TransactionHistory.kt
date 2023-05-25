@@ -12,18 +12,37 @@ class TransactionHistory {
         return history.pop()
     }
 
-    fun print() {
-        val dash = "-".repeat(100)
-        println(
-            "Transaction Type${" ".repeat(5)} Execution Date${" ".repeat(15)} Description${" ".repeat(15)}"
-        )
-        println(dash)
-        for (k in history) {
-            println(
-                k.type.toString().padEnd(22) +
-                        k.executionDate.toString().trim().padEnd(30) +
-                        k.description.toString().trim().padEnd(35)
-            )
-        }
+    fun size(): Int {
+        return history.size
     }
+
+    fun getHistory(): Stack<Transaction> {
+        return history
+    }
+
+
+
+    fun print(): String {
+        val formattedData = StringBuilder()
+
+        // Header
+        formattedData.append("\n///Transaction History///\n")
+        formattedData.append("+-----------------+------------+--------------------------------------+------------+--------------------------------------------------------------------------------------+\n")
+        formattedData.append("| Type            | Date       | Product ID                           | Owner      | Description                                                                          |\n")
+        formattedData.append("+-----------------+------------+--------------------------------------+------------+--------------------------------------------------------------------------------------+\n")
+
+        // bank.Customer data
+        for (transaction in history) {
+            formattedData.append("| ${transaction.type.toString().padEnd(13)}   ")
+            formattedData.append("| ${transaction.executionDate.toString().padEnd(10)} ")
+            formattedData.append("| ${transaction.product?.getId()?.padEnd(30)} ")
+            formattedData.append("| ${transaction.product?.getOwner()?.firstName?.padEnd(10)} ")
+            formattedData.append("| ${transaction.description.toString().padEnd(84)} |\n")
+        }
+        // Footer
+        formattedData.append("+----------------------------------------+----------------------+---------------------------------------------------------------------------------------------------------+\n")
+        return formattedData.toString()
+    }
+
+
 }

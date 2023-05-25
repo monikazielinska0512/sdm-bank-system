@@ -3,15 +3,21 @@ package transactions.concrete_transactions.account
 import products.Account
 import transactions.Transaction
 import transactions.TransactionType
-import java.time.LocalDate
 
 class CloseAccount(var account: Account) : Transaction(
-    TransactionType.CLOSE_ACCOUNT,
-    LocalDate.now(),
-    "Account_id: ${account.getId()}, Owner: ${account.getOwner()},  Balance: ${account.balance}"
-) {
+    TransactionType.CLOSE_ACCOUNT) {
     override fun execute() {
-//        account.close()
+        product = account
+        account.close()
+        updateDescription()
+        updateTransactionHistory()
+    }
+
+    private fun updateDescription(){
+        description = "Account was closed. Balance: ${account.balance}"
+    }
+
+    private fun updateTransactionHistory(){
         account.addToTransactionHistory(this)
     }
 }

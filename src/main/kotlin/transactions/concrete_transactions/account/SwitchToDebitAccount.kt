@@ -3,14 +3,13 @@ package transactions.concrete_transactions.account
 import products.Account
 import transactions.Transaction
 import transactions.TransactionType
-import java.time.LocalDate
 
-class SwitchToDebitAccount(private val account: Account) :
-    Transaction(TransactionType.DEBIT, LocalDate.now()) {
+class SwitchToDebitAccount(private val account: Account, private val limit: Double) :
+    Transaction(TransactionType.DEBIT) {
     override fun execute() {
-        account.switchToDebit()
-        description =
-            "Account_id: ${account.getId()}, isDebit: ${account.getIsDebit()} Owner: ${account.getOwner()}, Balance: ${account.balance}"
-
+        product = account
+        account.switchToDebit(limit)
+        description = "Debit is turned on. Balance: ${account.balance}"
+        account.addToTransactionHistory(this)
     }
 }

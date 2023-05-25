@@ -7,18 +7,17 @@ import transactions.Transaction
 import transactions.TransactionHistory
 import transactions.TransactionType
 import java.time.LocalDate
+import java.time.Period
 
-class TakeLoan(private var account: Account, private var amount: Double) :
-    Transaction(TransactionType.TAKE_LOAN, LocalDate.now()) {
+class TakeLoan(private var account: Account, private var amount: Double, private var period: Period) :
+    Transaction(TransactionType.TAKE_LOAN) {
     override fun execute() {
-        val loan = Loan(account.getOwner(), account, amount, LocalDate.now(), InterestAlgorithm2())
+        val loan = Loan(account.getOwner(), account, amount, period, LocalDate.now(), InterestAlgorithm2())
+        product = loan
         loan.open(account, amount)
-
         description =
-            "Loan_id: ${loan.getId()}, Date: ${LocalDate.now()}, Loan_value: ${amount}, Owner: ${account.getOwner()} Account_balance: ${account.balance}"
-
+            "Loan was taken. Loan_value: $amount"
         account.addToTransactionHistory(this)
         loan.addToTransactionHistory(this)
     }
-
 }
