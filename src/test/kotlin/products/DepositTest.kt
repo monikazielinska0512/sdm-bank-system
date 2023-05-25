@@ -30,8 +30,16 @@ class DepositTest {
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm3())
         account.balance = 1000.0
-        deposit = Deposit(account, 0.0, Period.ofMonths(12), customer, LocalDate.now(), 100.0, InterestAlgorithm1(), account.bank)
-        account.associatedProducts["deposits"]?.add(deposit)
+        deposit = Deposit(
+            account,
+            0.0,
+            Period.ofMonths(12),
+            customer,
+            LocalDate.now(),
+            0.0,
+            InterestAlgorithm1(),
+            account.bank
+        )
     }
 
     @Test

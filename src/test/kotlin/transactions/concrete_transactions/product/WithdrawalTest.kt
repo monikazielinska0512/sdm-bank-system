@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 
 class WithdrawalTest {
     private lateinit var bank: Bank
-    private lateinit var mediator: BankMediator
+    private lateinit var mediator: InterBankPaymentAgency
     private lateinit var customer: Customer
     private lateinit var account: Account
 
