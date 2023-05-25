@@ -8,6 +8,10 @@ import products.Loan
 class DepositReportVisitor: ReportVisitor {
     private val depositList = mutableListOf<Deposit>()
 
+    //getter
+    fun getDepositList(): List<Deposit> {
+        return depositList
+    }
     override fun visit(deposit: Deposit) {
         depositList.add(deposit)
     }

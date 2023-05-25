@@ -8,6 +8,10 @@ import products.Loan
 class AccountReportVisitor: ReportVisitor {
     private val accountList = mutableListOf<Account>()
 
+    fun getAccountList(): List<Account> {
+        return accountList
+    }
+
     override fun visit(account: Account) {
         accountList.add(account)
     }

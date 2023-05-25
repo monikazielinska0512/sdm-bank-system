@@ -8,6 +8,10 @@ import products.Loan
 class CustomerReportVisitor: ReportVisitor {
     private val customerList = mutableListOf<Customer>()
 
+    //getter
+    fun getCustomerList(): List<Customer> {
+        return customerList
+    }
     override fun visit(customer: Customer) {
         customerList.add(customer)
     }

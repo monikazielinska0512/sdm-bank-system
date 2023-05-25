@@ -57,6 +57,4 @@ class LoanTest {
 //        Assertions.assertTrue(loan.getAssociatedAccount().associatedProducts["loans"]?.contains(loan))
     }
 
-    // Add more tests as needed
-
 }
