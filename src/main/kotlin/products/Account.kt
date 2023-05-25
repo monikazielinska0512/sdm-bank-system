@@ -37,7 +37,6 @@ class Account(
         return closedDate
     }
 
-
     val associatedProducts: Map<String, MutableList<Product>> = mapOf(
         "deposits" to mutableListOf(),
         "loans" to mutableListOf()
