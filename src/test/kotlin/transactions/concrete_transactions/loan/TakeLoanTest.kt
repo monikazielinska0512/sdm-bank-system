@@ -1,9 +1,9 @@
 package transactions.concrete_transactions.loan
 
-import InterbankPaymentAgency
+import BankMediator
+import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer
-import interestMechanisms.InterestAlgorithm1
 import interestMechanisms.InterestAlgorithm3
 import org.junit.jupiter.api.Test
 
@@ -13,7 +13,6 @@ import products.Account
 import products.Deposit
 import products.Loan
 import transactions.TransactionType
-import transactions.concrete_transactions.deposit.OpenDeposit
 import java.time.Period
 
 class TakeLoanTest {
@@ -21,11 +20,13 @@ class TakeLoanTest {
     private lateinit var bank: Bank
     private lateinit var customer: Customer
     private lateinit var account: Account
-    private lateinit var deposit: Deposit
     private lateinit var takeLoanTransaction: TakeLoan
+    private lateinit var mediator: BankMediator
+
     @BeforeEach
     fun setUp() {
-        bank = Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm3())
         account.balance = 1000.0

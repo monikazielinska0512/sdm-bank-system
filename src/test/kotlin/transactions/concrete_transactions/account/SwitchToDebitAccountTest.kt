@@ -1,6 +1,6 @@
 package transactions.concrete_transactions.account
 
-import InterbankPaymentAgency
+import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer
 import interestMechanisms.InterestAlgorithm2
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import products.Account
-import transactions.TransactionType
 import transactions.TransactionType.*
 import java.time.LocalDate
 
@@ -19,10 +18,12 @@ class SwitchToDebitAccountTest {
     private lateinit var switchToDebitAccount: SwitchToDebitAccount
     private lateinit var bank: Bank
     private lateinit var customer: Customer
+    private lateinit var mediator: InterBankPaymentAgency
 
     @BeforeEach
     fun setUp() {
-        bank =  Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank =  Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = Account(customer, LocalDate.now(), 0.0, InterestAlgorithm2(), bank)
         switchToDebitAccount = SwitchToDebitAccount(account, 100.0)

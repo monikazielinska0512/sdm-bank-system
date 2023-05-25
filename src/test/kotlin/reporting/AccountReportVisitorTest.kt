@@ -15,10 +15,12 @@ class AccountReportVisitorTest {
     private lateinit var customer: Customer
     private lateinit var account1: Account
     private lateinit var account2: Account
+    private lateinit var mediator: InterBankPaymentAgency
 
     @BeforeEach
     fun setUp() {
-        bank =  Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank =  Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         accountReportVisitor = AccountReportVisitor()
         account1 = Account(customer, LocalDate.now(), 10000.0, InterestAlgorithm2(), bank)

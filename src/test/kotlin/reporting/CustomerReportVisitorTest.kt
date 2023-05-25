@@ -1,16 +1,12 @@
 package reporting
 
-import InterbankPaymentAgency
+import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer
-import interestMechanisms.InterestAlgorithm2
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import products.Account
-import java.time.LocalDate
 
 class CustomerReportVisitorTest {
 
@@ -18,10 +14,11 @@ class CustomerReportVisitorTest {
     private lateinit var bank: Bank
     private lateinit var customer1: Customer
     private lateinit var customer2: Customer
+    private val mediator = InterBankPaymentAgency()
 
     @BeforeEach
     fun setUp() {
-        bank =  Bank("MyBank", InterbankPaymentAgency())
+        bank =  Bank("MyBank", mediator)
         customerReportVisitor = CustomerReportVisitor()
         customer1 = Customer("John", "Doe", bank)
         customer2 = Customer("Doe", "John", bank)

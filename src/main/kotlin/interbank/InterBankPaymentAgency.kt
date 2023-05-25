@@ -2,7 +2,7 @@ import bank.Bank
 import transactions.concrete_transactions.product.Transfer
 
 class InterBankPaymentAgency : BankMediator {
-    private val banks: MutableList<Bank> = mutableListOf()
+    val banks: MutableList<Bank> = mutableListOf()
     private val transfers: MutableList<Transfer> = mutableListOf()
     override fun addTransfer(transfer: Transfer) {
         transfers.add(transfer)

@@ -1,6 +1,6 @@
 package transactions.concrete_transactions.account
 
-import InterbankPaymentAgency
+import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer
 import interestMechanisms.InterestAlgorithm2
@@ -18,10 +18,12 @@ class CloseAccountTest {
     private lateinit var closeAccountTransaction: CloseAccount
     private lateinit var bank: Bank
     private lateinit var customer: Customer
+    private lateinit var mediator: InterBankPaymentAgency
 
     @BeforeEach
     fun setUp() {
-        bank =  Bank("MyBank", InterbankPaymentAgency())
+        mediator = InterBankPaymentAgency()
+        bank =  Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = Account(customer, LocalDate.now(), 0.0, InterestAlgorithm2(), bank)
         closeAccountTransaction = CloseAccount(account)

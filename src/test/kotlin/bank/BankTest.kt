@@ -58,5 +58,4 @@ class BankTest {
         Assertions.assertEquals(initialBalance, account.associatedProducts["deposits"]?.get(0)?.balance)
         Assertions.assertTrue(bank.getTransactionHistory().getHistory().contains(openDepositTransaction))
     }
-
 }

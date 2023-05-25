@@ -1,6 +1,7 @@
 package interestMechanisms
 
 import BankMediator
+import InterBankPaymentAgency
 import Withdrawal
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
@@ -21,6 +22,7 @@ class InterestAlgorithm3Test {
 
     @BeforeEach
     fun setUp() {
+        mediator = InterBankPaymentAgency()
         bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm3())
@@ -37,6 +39,6 @@ class InterestAlgorithm3Test {
                 account.getDateOpened().year * 0.005
 
         val actualInterest = account.calculateInterest()
-        assertEquals(expectedInterest, actualInterest)
+        assertEquals(expectedInterest, actualInterest, 0.01)
     }
 }

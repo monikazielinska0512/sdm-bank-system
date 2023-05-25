@@ -19,6 +19,7 @@ class AccountTest {
 
     @BeforeEach
     fun setUp() {
+        mediator = InterBankPaymentAgency()
         bank1 = Bank("MyBank1", mediator)
         bank2 = Bank("MyBank2", mediator)
         customer1 = Customer("John", "Doe", bank1)

@@ -1,6 +1,7 @@
 package interestMechanisms
 
 import BankMediator
+import InterBankPaymentAgency
 import bank.Bank
 import bank.Customer
 import org.junit.jupiter.api.Test
@@ -17,6 +18,7 @@ class InterestAlgorithm2Test {
 
     @BeforeEach
     fun setUp() {
+        mediator = InterBankPaymentAgency()
         bank = Bank("MyBank", mediator)
         customer = Customer("John", "Doe", bank)
         account = bank.createAccount(customer, InterestAlgorithm2())
