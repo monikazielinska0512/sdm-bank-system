@@ -20,7 +20,7 @@ class OpenDeposit(
         val deposit = Deposit(account, 0.0, period, account.getOwner(), LocalDate.now(), 0.0,  interestAlgorithm)
         product = deposit
         deposit.open()
-        description = " Deposit was opened. Deposit_balance: ${deposit.balance}"
+        description = "Deposit was opened. Deposit_balance: ${deposit.balance}"
         deposit.addToTransactionHistory(this)
         account.addToTransactionHistory(this)
     }
