@@ -49,7 +49,7 @@ class Loan(
         this.addToBank()
     }
 
-    private fun close() {
+    override fun close() {
         this.associatedAccount.withdrawMoney(repaymentValue)
         repaymentValue = 0.0
         this.isPaidOff = true

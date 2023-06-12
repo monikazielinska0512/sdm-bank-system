@@ -35,7 +35,7 @@ class Deposit(
         }
     }
 
-    fun close() {
+    override fun close() {
         if (associatedAccount.associatedProducts["deposits"]?.contains(this) == true) {
             withdrawAndClose()
             associatedAccount.associatedProducts["deposits"]?.remove(this)
@@ -44,7 +44,7 @@ class Deposit(
         }
     }
 
-    fun open() {
+    override fun open() {
         associatedAccount.associatedProducts["deposits"]?.add(this)
         this.addToBank()
     }

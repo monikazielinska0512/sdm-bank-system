@@ -10,7 +10,7 @@ class OpenAccount(val account: Account) : Transaction(
     override fun execute() {
         product = account
         account.open()
-        description = "Account was opened. Balance: ${account.balance}, isDebit: ${account.getIsDebit()}"
+        description = "Account was opened. Balance: ${account.balance}"
         account.addToTransactionHistory(this)
     }
 }

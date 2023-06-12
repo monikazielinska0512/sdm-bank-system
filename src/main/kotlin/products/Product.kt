@@ -17,6 +17,8 @@ abstract class Product(
     private var interestMechanism: InterestMechanism,
     override var bank: Bank,
     private var transactionHistory: TransactionHistory = TransactionHistory(),
+    protected var isActive: Boolean = true,
+    protected var closedDate: LocalDate? = null
 
     ) : BankEntity {
 
@@ -73,6 +75,15 @@ abstract class Product(
 
     fun getId(): String {
         return id
+    }
+
+    open fun close() {
+        isActive = false
+        closedDate = LocalDate.now()
+    }
+
+    open fun open() {
+        this.addToBank()
     }
 
     override fun accept(visitor: ReportVisitor) {}
